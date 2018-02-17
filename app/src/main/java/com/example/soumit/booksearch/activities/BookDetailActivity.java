@@ -58,7 +58,9 @@ public class BookDetailActivity extends AppCompatActivity {
         //change activity title
         this.setTitle(book.getTitle());
         // Populate data
-        Picasso.with(this).load(Uri.parse(book.getLargeCoverUrl())).error(R.drawable.ic_nocover).into(ivBookCover);
+        Picasso.with(this).load(Uri.parse(book.getLargeCoverUrl()))
+                .error(R.drawable.ic_nocover)
+                .into(ivBookCover);
         tvTitle.setText(book.getTitle());
         tvAuthor.setText(book.getAuthor());
         // fetch extra book data from books API
@@ -111,7 +113,7 @@ public class BookDetailActivity extends AppCompatActivity {
 
     private void setShareIntent() {
         ImageView ivImage = (ImageView) findViewById(R.id.ivBookCover);
-        final TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
+        final TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
         // Get access to the URI for the bitmap
         Uri bmpUri = getLocalBitmapUri(ivImage);
         // Construct a ShareIntent with link to image
@@ -119,7 +121,7 @@ public class BookDetailActivity extends AppCompatActivity {
         // Construct a ShareIntent with link to image
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.setType("*/*");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, (String)tvTitle.getText());
+        shareIntent.putExtra(Intent.EXTRA_TEXT, (String) tvTitle.getText());
         shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
         // Launch share menu
         startActivity(Intent.createChooser(shareIntent, "Share Image"));
@@ -131,7 +133,7 @@ public class BookDetailActivity extends AppCompatActivity {
         // Extract Bitmap from ImageView drawable
         Drawable drawable = imageView.getDrawable();
         Bitmap bmp = null;
-        if (drawable instanceof BitmapDrawable){
+        if (drawable instanceof BitmapDrawable) {
             bmp = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         } else {
             return null;
@@ -139,7 +141,7 @@ public class BookDetailActivity extends AppCompatActivity {
         // Store image to default external storage directory
         Uri bmpUri = null;
         try {
-            File file =  new File(Environment.getExternalStoragePublicDirectory(
+            File file = new File(Environment.getExternalStoragePublicDirectory(
                     Environment.DIRECTORY_DOWNLOADS), "share_image_" + System.currentTimeMillis() + ".png");
             file.getParentFile().mkdirs();
             FileOutputStream out = new FileOutputStream(file);
